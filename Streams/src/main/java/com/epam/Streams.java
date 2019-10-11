@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -62,9 +63,15 @@ public class Streams {
 		int num = numbers.stream().reduce(0, (n1, n2) -> n1 + n2).intValue();
 		System.out.println(num);
 
-		//coverting stream to array in java 8
+		//Converting stream to array in java 8
 		Integer[] array = numbers.stream().toArray(Integer[]::new);
 		Stream.of(array).forEach(a -> System.out.println(a));
+		
+		//using optional in java 8
+		Optional<Integer> possible = Optional.of(5);
+		if(possible.isPresent()){
+		    System.out.println(possible.get());
+		}
 		
 		
 
