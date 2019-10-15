@@ -4,16 +4,24 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 
 @SuppressWarnings("unused")
 public class Streams {
@@ -63,18 +71,36 @@ public class Streams {
 		int num = numbers.stream().reduce(0, (n1, n2) -> n1 + n2).intValue();
 		System.out.println(num);
 
-		//Converting stream to array in java 8
+		// Converting stream to array in java 8
 		Integer[] array = numbers.stream().toArray(Integer[]::new);
 		Stream.of(array).forEach(a -> System.out.println(a));
-		
-		//using optional in java 8
-		Optional<Integer> possible = Optional.of(5);
-		if(possible.isPresent()){
-		    System.out.println(possible.get());
-		}
-		
-		
 
+		// using optional in java 8
+		Optional<Integer> possible = Optional.of(5);
+		if (possible.isPresent()) {
+			System.out.println(possible.get());
+		}
+		String noValue = "No Value is Present";
+		String isNull = (String) Optional.ofNullable(String.valueOf(5)).orElse(noValue);
+		System.out.println(isNull);
+
+		List<String> companyNames = Arrays.asList("paypal", "oracle", "", "microsoft", "", "apple");
+		
+		Optional<List<String>> listOptional = Optional.of(companyNames);
+
+		int size = listOptional.map(List::size).orElse(0);
+		System.out.println("Size of the List::"+size);
+		
+		//Java 8 Date and Time API
+		
+		//To get Local Date and time 
+		LocalDateTime localDateTime=LocalDateTime.now();
+		
+		System.out.println(localDateTime.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")));
+		
+		LocalTime time=LocalTime.now();
+		FormatStyle timeStyle=FormatStyle.MEDIUM;
+		System.out.println(time.format(DateTimeFormatter.ofLocalizedTime(timeStyle)));
 	}
 
 }
